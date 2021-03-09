@@ -27,7 +27,9 @@ scene.add(camera);
 const cube = new Mesh(new BoxBufferGeometry(1, 1, 1), new MeshNormalMaterial());
 scene.add(cube);
 
-const renderer = new WebGLRenderer();
+const renderer = new WebGLRenderer({
+  antialias: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
