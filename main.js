@@ -5,6 +5,8 @@ import {
   Clock,
   Float32BufferAttribute,
   Group,
+  Line,
+  LineBasicMaterial,
   MathUtils,
   Mesh,
   MeshNormalMaterial,
@@ -12,6 +14,7 @@ import {
   Points,
   PointsMaterial,
   Scene,
+  SphereBufferGeometry,
   TextureLoader,
   VertexColors,
   WebGLRenderer,
@@ -23,7 +26,8 @@ const textureLoader = new TextureLoader();
 const circletTexture = textureLoader.load("./disc.png");
 const scene = new Scene();
 const count = 100;
-const distance = 2;
+const distance = 4;
+const size = 0.2;
 
 scene.add(new AxesHelper());
 const camera = new PerspectiveCamera(
@@ -48,7 +52,7 @@ geometry.setAttribute("position", new Float32BufferAttribute(points, 3));
 geometry.setAttribute("color", new Float32BufferAttribute(colors, 3));
 const pointMaterail = new PointsMaterial({
   vertexColors: VertexColors,
-  size: 0.1,
+  size,
   map: circletTexture,
   alphaTest: 0.01,
   transparent: true,
@@ -58,6 +62,16 @@ scene.add(pointsObject);
 
 const group = new Group();
 group.add(pointsObject);
+
+const lineMaterail = new LineBasicMaterial({
+  color: 0x000000,
+  opacity: 0.05,
+  depthWrite: false,
+});
+const lineObject = new Line(geometry, lineMaterail);
+group.add(lineObject);
+
+
 scene.add(group);
 
 const renderer = new WebGLRenderer({
