@@ -11,13 +11,14 @@ import {
   PointsMaterial,
   Scene,
   TextureLoader,
+  VertexColors,
   WebGLRenderer,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./style.css";
 
 const textureLoader = new TextureLoader();
-const circletTexture = textureLoader.load("./circle.png");
+const circletTexture = textureLoader.load("./disc.png");
 const scene = new Scene();
 const count = 100;
 const distance = 2;
@@ -35,14 +36,17 @@ camera.position.x = 0.5;
 scene.add(camera);
 
 const points = new Float32Array(count * 3);
+const colors = new Float32Array(count * 3);
 for (let index = 0; index < points.length; index++) {
   points[index] = MathUtils.randFloatSpread(distance * 2);
+  colors[index] = Math.random() * 0.5 + 0.5;
 }
 const geometry = new BufferGeometry();
 geometry.setAttribute("position", new Float32BufferAttribute(points, 3));
+geometry.setAttribute("color", new Float32BufferAttribute(colors, 3));
 const pointMaterail = new PointsMaterial({
-  color: 0xff0000,
-  size: 0.5,
+  vertexColors: VertexColors,
+  size: 0.1,
   map: circletTexture,
   alphaTest: 0.01,
   transparent: true,
