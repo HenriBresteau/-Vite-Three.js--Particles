@@ -2,7 +2,9 @@ import {
   AxesHelper,
   BoxBufferGeometry,
   BufferGeometry,
+  Clock,
   Float32BufferAttribute,
+  Group,
   MathUtils,
   Mesh,
   MeshNormalMaterial,
@@ -54,6 +56,10 @@ const pointMaterail = new PointsMaterial({
 const pointsObject = new Points(geometry, pointMaterail);
 scene.add(pointsObject);
 
+const group = new Group();
+group.add(pointsObject);
+scene.add(group);
+
 const renderer = new WebGLRenderer({
   antialias: true,
   alpha: true,
@@ -65,10 +71,20 @@ document.body.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+const clock = new Clock();
+let mouseX = 0;
+window.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+});
+
 function tick() {
+  const time = clock.getElapsedTime();
+  // group.rotation.y = time * 0.1;
   renderer.render(scene, camera);
   controls.update();
   requestAnimationFrame(tick);
+  const ratio = (mouseX / window.innerWidth - 0.5) * 2;
+  group.rotation.y = ratio + Math.PI * 0.01;
 }
 tick();
 
