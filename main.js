@@ -45,14 +45,16 @@ const pointMaterail = new PointsMaterial({
   size: 0.5,
   map: circletTexture,
   alphaTest: 0.01,
-  transparent:true,
+  transparent: true,
 });
 const pointsObject = new Points(geometry, pointMaterail);
 scene.add(pointsObject);
 
 const renderer = new WebGLRenderer({
   antialias: true,
+  alpha: true,
 });
+renderer.clearColor(0x00000, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
