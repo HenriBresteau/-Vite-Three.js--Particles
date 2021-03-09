@@ -7,6 +7,7 @@ import {
   Scene,
   WebGLRenderer,
 } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import "./style.css";
 
 const scene = new Scene();
@@ -31,8 +32,11 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
 
+const controls = new OrbitControls(camera, renderer.domElement);
+
 function tick() {
   renderer.render(scene, camera);
+  controls.update();
   requestAnimationFrame(tick);
 }
 tick();
